@@ -4,9 +4,9 @@ import AppLayout from '../components/layout/AppLayout';
 import LoginPage from '../pages/LoginPage';
 import SignupPage from '../pages/SignupPage';
 import DashboardPage from '../pages/DashboardPage';
+import AssetDirectoryPage from '../pages/assets/AssetDirectoryPage';
+import RegisterAssetPage from '../pages/assets/RegisterAssetPage';
 
-// As each phase adds a screen, its route gets added here.
-// allowedRoles is omitted for screens every logged-in role can see.
 export default function AppRoutes() {
   return (
     <Routes>
@@ -21,6 +21,9 @@ export default function AppRoutes() {
         }
       >
         <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/assets" element={<AssetDirectoryPage />} />
+        <Route path="/assets/new" element={<RegisterAssetPage />} />
+        <Route path="/assets/edit/:id" element={<RegisterAssetPage />} />
       </Route>
 
       <Route path="*" element={<Navigate to="/dashboard" replace />} />

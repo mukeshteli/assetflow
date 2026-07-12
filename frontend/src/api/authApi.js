@@ -8,4 +8,5 @@ export async function signup({ fullName, email, password }) {
 export async function login({ email, password }) {
     const { data } = await axiosClient.post('/auth/login', { email, password });
     return data;
+
 }
