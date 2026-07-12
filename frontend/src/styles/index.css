@@ -60,3 +60,64 @@ body {
   margin: 80px auto;
   padding: 24px;
 }
+.auth-page {
+  max-width: 400px;
+  margin: 80px auto;
+  padding: 24px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.auth-page form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 16px;
+}
+
+.auth-page label {
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.auth-page input {
+  padding: 10px 12px;
+  border: 1px solid #d4d4d4;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.auth-page button {
+  margin-top: 16px;
+  padding: 10px 16px;
+  background: #2f6fed;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.auth-page button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.auth-hint {
+  font-size: 13px;
+  color: #666;
+}
+
+.form-error {
+  color: #c0392b;
+  font-size: 13px;
+  margin: 4px 0 0;
+}
+
+.field-error {
+  color: #c0392b;
+  font-size: 12px;
+  margin: 0;
+}
