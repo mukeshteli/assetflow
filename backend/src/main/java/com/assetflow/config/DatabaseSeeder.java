@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -30,10 +31,26 @@ public class DatabaseSeeder implements CommandLineRunner {
     private final PasswordEncoder passwordEncoder;
 
     @Override
+    @Transactional
     public void run(String... args) throws Exception {
-        if (employeeRepository.count() > 0) {
-            return; // Already seeded
-        }
+        // Force clean seeding for demo purposes
+
+        // Clean up database tables to avoid unique constraints
+        bookingRepository.deleteAllInBatch();
+        allocationRepository.deleteAllInBatch();
+        maintenanceRepository.deleteAllInBatch();
+        auditFindingRepository.deleteAllInBatch();
+        auditAssignmentRepository.deleteAllInBatch();
+        auditCycleRepository.deleteAllInBatch();
+        assetRepository.deleteAllInBatch();
+        
+        departmentRepository.findAll().forEach(dept -> {
+            dept.setHead(null);
+            departmentRepository.saveAndFlush(dept);
+        });
+        employeeRepository.deleteAllInBatch();
+        departmentRepository.deleteAllInBatch();
+        categoryRepository.deleteAllInBatch();
 
         // 1. Seed Categories
         AssetCategory electronics = categoryRepository.save(AssetCategory.builder()
@@ -77,6 +94,15 @@ public class DatabaseSeeder implements CommandLineRunner {
         Employee admin = employeeRepository.save(Employee.builder()
                 .fullName("Admin User")
                 .email("admin@assetflow.com")
+                .passwordHash(commonPassword)
+                .role(Role.ADMIN)
+                .status(EntityStatus.ACTIVE)
+                .build());
+
+        // Custom seeded admin for testing
+        employeeRepository.save(Employee.builder()
+                .fullName("Mukesh")
+                .email("telimukesh2005@gmail.com")
                 .passwordHash(commonPassword)
                 .role(Role.ADMIN)
                 .status(EntityStatus.ACTIVE)

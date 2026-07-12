@@ -1,4 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import ProtectedRoute from './ProtectedRoute';
 import AppLayout from '../components/layout/AppLayout';
 import LoginPage from '../pages/LoginPage';
@@ -15,10 +16,18 @@ import ReportsPage from '../pages/ReportsPage';
 import NotificationsPage from '../pages/NotificationsPage';
 
 export default function AppRoutes() {
+  const { isAuthenticated } = useAuth();
+
   return (
     <Routes>
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/signup" element={<SignupPage />} />
+      <Route
+        path="/login"
+        element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <LoginPage />}
+      />
+      <Route
+        path="/signup"
+        element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <SignupPage />}
+      />
 
       <Route
         element={
@@ -40,6 +49,10 @@ export default function AppRoutes() {
         <Route path="/notifications" element={<NotificationsPage />} />
       </Route>
 
+      <Route
+        path="/"
+        element={<Navigate to={isAuthenticated ? "/dashboard" : "/login"} replace />}
+      />
       <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>
   );
